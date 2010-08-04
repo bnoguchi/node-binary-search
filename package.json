@@ -3,8 +3,18 @@
   "description": "An addon to node.js that provides a binary search function that runs in native C++.",
   "author": "Brian Noguchi (github.com/bnoguchi)",
   "main": "./lib/binarySearch",
+  "repository" :
+  { "type" : "git",
+    "url" : "http://github.com/bnoguchi/node-binary-search"
+  },
+  "engines" : { "node" : ">=0.1.100" },
   "scripts": { 
     "install": "cd src && node-waf configure build",
     "test": "test/test.js"
-  }
+  },
+  "licenses" :
+  [ { "type" : "MIT"
+    , "url" : "http://github.com/bnoguchi/node-binary-search/LICENSE-MIT"
+    }   
+  ]
 }
