@@ -1,0 +1,3 @@
+Provides a binarySearch function for node that runs in C++.
+> cd src
+> node-waf configure build
