@@ -1,3 +1,11 @@
-Provides a binarySearch function for node that runs in C++.
+Provides a binarySearch function for node that runs in C++. Only works on arrays of ints.
+
+To use:
+
 > cd src
 > node-waf configure build
+
+Then in your js file (see test/test.js for a full example):
+var binarySearch = require("/path/to/this/repo/build/default/binarySearch").binarySearch;
+var arr = [1,2,3,4,5,6,7,8,9,10];
+var matchingIndex = binarySearch(arr, 5); // arr[matchingIndex] === 5 => true
