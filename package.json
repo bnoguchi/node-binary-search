@@ -1,7 +1,7 @@
 { "name": "binarySearch",
   "version": "0.0.1",
   "description": "An addon to node.js that provides a binary search function that runs in native C++.",
-  "author": "Brian Noguchi (bnoguchi)",
+  "author": "Brian Noguchi (github.com/bnoguchi)",
   "main": "./lib/binarySearch",
   "scripts": { 
     "install": "cd src && node-waf configure build",
