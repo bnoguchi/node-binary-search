@@ -2,34 +2,6 @@
 
 using namespace v8;
 
-// Copy/pasted from http://www.fredosaurus.com/notes-cpp/algorithms/searching/binarysearch.html
-int binarySearch(int sortedArray[], int first, int last, int key) {
-   // function:
-   //   Searches sortedArray[first]..sortedArray[last] for key.  
-   // returns: index of the matching element if it finds key, 
-   //         otherwise  -(index where it could be inserted)-1.
-   // parameters:
-   //   sortedArray in  array of sorted (ascending) values.
-   //   first, last in  lower and upper subscript bounds
-   //   key         in  value to search for.
-   // returns:
-   //   index of key, or -insertion_position -1 if key is not 
-   //                 in the array. This value can easily be
-   //                 transformed into the position to insert it.
-   
-   while (first <= last) {
-       int mid = (first + last) / 2;  // compute mid point.
-       if (key > sortedArray[mid]) 
-           first = mid + 1;  // repeat search in top half.
-       else if (key < sortedArray[mid]) 
-           last = mid - 1; // repeat search in bottom half.
-       else
-           return mid;     // found it. return position /////
-   }
-   return -(first + 1);    // failed to find key
-}
-
-
 int binary_search(Local<Array> ary, unsigned int r) {
     int upper = ary->Length() - 1;
     int lower = 0;
