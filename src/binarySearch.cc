@@ -2,7 +2,8 @@
 
 using namespace v8;
 
-int binary_search(Local<Array> ary, unsigned int r) {
+// Finds the closest index where value <= the given value
+int floor_binary_search(Local<Array> ary, unsigned int r) {
     int upper = ary->Length() - 1;
     int lower = 0;
     int idx = 0;
@@ -27,7 +28,36 @@ int binary_search(Local<Array> ary, unsigned int r) {
     return upper;
 }
 
-Handle<Value> Generate( const Arguments &args ) {
+int binary_search(Local<Array> ary, unsigned int r) {
+    int upper = ary->Length() - 1;
+    int lower = 0;
+    int idx = 0;
+
+    while (lower <= upper) {
+        idx = (lower + upper) / 2;
+
+        unsigned int l = ary->Get(idx)->Uint32Value();
+        if (l == r) {
+          return idx;
+        }
+        else if (l > r) {
+          upper = idx - 1;
+        }
+        else {
+          lower = idx + 1;
+        }
+    }
+    return -1;
+}
+
+Handle<Value> GenerateFloorBinarySearch( const Arguments &args ) {
+    HandleScope scope;
+    Local<Object> o = args[0]->ToObject();
+    Local<Array> a = Local<Array>::Cast(o);
+    return Integer::New(floor_binary_search(a, args[1]->Uint32Value()));
+}
+
+Handle<Value> GenerateBinarySearch( const Arguments &args ) {
     HandleScope scope;
     Local<Object> o = args[0]->ToObject();
     Local<Array> a = Local<Array>::Cast(o);
@@ -37,6 +67,8 @@ Handle<Value> Generate( const Arguments &args ) {
 extern "C" void
 init (Handle<Object> target) {
     HandleScope scope;
-    Local<FunctionTemplate> t = FunctionTemplate::New(Generate);
-    target->Set(String::NewSymbol("binarySearch"), t->GetFunction());
+    Local<FunctionTemplate> t1 = FunctionTemplate::New(GenerateFloorBinarySearch);
+    target->Set(String::NewSymbol("floorBinarySearch"), t1->GetFunction());
+    Local<FunctionTemplate> t2 = FunctionTemplate::New(GenerateBinarySearch);
+    target->Set(String::NewSymbol("binarySearch"), t2->GetFunction());
 }
