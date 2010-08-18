@@ -28,6 +28,32 @@ int floor_binary_search(Local<Array> ary, unsigned int r) {
     return upper;
 }
 
+// Finds the closest index where value >= the given value
+int ceiling_binary_search(Local<Array> ary, unsigned int r) {
+    int upper = ary->Length() - 1;
+    int lower = 0;
+    int idx = 0;
+
+    while (lower <= upper) {
+        idx = (lower + upper) / 2;
+
+        unsigned int l = ary->Get(idx)->Uint32Value();
+        if (l == r) {
+          return idx;
+        }
+        else if (l > r) {
+          upper = idx - 1;
+        }
+        else {
+          lower = idx + 1;
+        }
+    }
+    if (lower > ary->Length() - 1) {
+        lower = 0;
+    }
+    return lower;
+}
+
 int binary_search(Local<Array> ary, unsigned int r) {
     int upper = ary->Length() - 1;
     int lower = 0;
@@ -57,6 +83,13 @@ Handle<Value> GenerateFloorBinarySearch( const Arguments &args ) {
     return Integer::New(floor_binary_search(a, args[1]->Uint32Value()));
 }
 
+Handle<Value> GenerateCeilingBinarySearch( const Arguments &args ) {
+    HandleScope scope;
+    Local<Object> o = args[0]->ToObject();
+    Local<Array> a = Local<Array>::Cast(o);
+    return Integer::New(ceiling_binary_search(a, args[1]->Uint32Value()));
+}
+
 Handle<Value> GenerateBinarySearch( const Arguments &args ) {
     HandleScope scope;
     Local<Object> o = args[0]->ToObject();
@@ -69,6 +102,8 @@ init (Handle<Object> target) {
     HandleScope scope;
     Local<FunctionTemplate> t1 = FunctionTemplate::New(GenerateFloorBinarySearch);
     target->Set(String::NewSymbol("floorBinarySearch"), t1->GetFunction());
-    Local<FunctionTemplate> t2 = FunctionTemplate::New(GenerateBinarySearch);
-    target->Set(String::NewSymbol("binarySearch"), t2->GetFunction());
+    Local<FunctionTemplate> t2 = FunctionTemplate::New(GenerateCeilingBinarySearch);
+    target->Set(String::NewSymbol("ceilingBinarySearch"), t2->GetFunction());
+    Local<FunctionTemplate> t3 = FunctionTemplate::New(GenerateBinarySearch);
+    target->Set(String::NewSymbol("binarySearch"), t3->GetFunction());
 }
