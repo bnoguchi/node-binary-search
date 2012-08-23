@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/bnoguchi/node-binary-search.png)](http://travis-ci.org/bnoguchi/node-binary-search)
 Provides a binarySearch function for node that runs in C++. Only works on arrays of ints.
 
 To use:
